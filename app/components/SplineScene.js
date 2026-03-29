@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { useState, Suspense } from "react";
 import Spline from "@splinetool/react-spline";
 import styles from "./SplineScene.module.css";
 
@@ -14,11 +14,21 @@ function SplineLoader() {
 }
 
 export default function SplineScene() {
+  const [loaded, setLoaded] = useState(false);
+
   return (
     <div className={styles.wrapper}>
-      <Suspense fallback={<SplineLoader />}>
-        <Spline scene="https://prod.spline.design/POMaOgUDSZSAgM0Q/scene.splinecode" />
-      </Suspense>
+      {/* Show loader until Spline fires onLoad */}
+      {!loaded && <SplineLoader />}
+
+      <div className={`${styles.splineInner} ${loaded ? styles.visible : ""}`}>
+        <Suspense fallback={null}>
+          <Spline
+            scene="https://prod.spline.design/POMaOgUDSZSAgM0Q/scene.splinecode"
+            onLoad={() => setLoaded(true)}
+          />
+        </Suspense>
+      </div>
     </div>
   );
 }
