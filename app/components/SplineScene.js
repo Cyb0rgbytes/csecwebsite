@@ -24,7 +24,7 @@ export default function SplineScene() {
       <div className={`${styles.splineInner} ${loaded ? styles.visible : ""}`}>
         <Suspense fallback={null}>
           <Spline
-            scene="https://prod.spline.design/POMaOgUDSZSAgM0Q/scene.splinecode"
+            scene="https://csecnix.com/models/nexbot_robot_character_concept.spline"
             onLoad={() => setLoaded(true)}
           />
         </Suspense>
