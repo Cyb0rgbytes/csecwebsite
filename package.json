@@ -12,14 +12,15 @@
     "cf-build": "opennextjs-cloudflare build"
   },
   "dependencies": {
-    "@splinetool/react-spline": "^3.1.0",
-    "@splinetool/runtime": "^1.12.73",
-    "next": "^16.2.4",
+    "@splinetool/react-spline": "^4.1.0",
+    "@splinetool/runtime": "^1.12.94",
+    "framer-motion": "^12.38.0",
+    "next": "16.2.6",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.14.1",
+    "@opennextjs/cloudflare": "^1.18.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.1"
   }

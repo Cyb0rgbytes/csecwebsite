@@ -1,7 +1,34 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import styles from "./AboutSection.module.css";
+
+/* ─── Animation variants ─── */
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+const staggerContainer = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12 },
+  },
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+  },
+};
 
 const features = [
   {
@@ -43,7 +70,13 @@ export default function AboutSection() {
       <div className="container">
         <div className={styles.grid}>
           {/* Left — Image/Visual */}
-          <div className={styles.visual}>
+          <motion.div
+            className={styles.visual}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={scaleIn}
+          >
             <div className={styles.imageWrapper}>
               <Image
                 src="/images/csec-logo.png"
@@ -55,39 +88,64 @@ export default function AboutSection() {
               <div className={styles.imageGlow} />
             </div>
             {/* Floating badge */}
-            <div className={styles.floatingBadge}>
+            <motion.div
+              className={styles.floatingBadge}
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 4, ease: "easeInOut", repeat: Infinity }}
+            >
               <span className={styles.floatingNum}>10+</span>
               <span className={styles.floatingLabel}>Years of<br />Experience</span>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Right — Content */}
-          <div className={styles.content}>
-            <span className="section-label">About CSECNIX</span>
-            <h2 className="section-title">
+          <motion.div
+            className={styles.content}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={staggerContainer}
+          >
+            <motion.span className="section-label" variants={fadeUp}>
+              About CSECNIX
+            </motion.span>
+            <motion.h2 className="section-title" variants={fadeUp}>
               Your Trusted Partner in{" "}
               <span className="gradient-text">Cybersecurity</span>
-            </h2>
-            <p className="section-subtitle" style={{ marginBottom: 40 }}>
+            </motion.h2>
+            <motion.p
+              className="section-subtitle"
+              style={{ marginBottom: 40 }}
+              variants={fadeUp}
+            >
               CSECNIX is a cybersecurity firm dedicated to protecting businesses
               from modern digital threats. We combine cutting-edge technology
               with expert knowledge to deliver comprehensive security solutions
               tailored to your specific needs.
-            </p>
+            </motion.p>
 
             {/* Feature list */}
-            <div className={styles.features}>
+            <motion.div className={styles.features} variants={staggerContainer}>
               {features.map((f, i) => (
-                <div key={i} className={styles.feature}>
+                <motion.div
+                  key={i}
+                  className={styles.feature}
+                  variants={fadeUp}
+                  whileHover={{
+                    backgroundColor: "rgba(139, 106, 191, 0.06)",
+                    borderColor: "rgba(255, 255, 255, 0.06)",
+                    transition: { duration: 0.2 },
+                  }}
+                >
                   <div className={styles.featureIcon}>{f.icon}</div>
                   <div>
                     <h3 className={styles.featureTitle}>{f.title}</h3>
                     <p className={styles.featureDesc}>{f.desc}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

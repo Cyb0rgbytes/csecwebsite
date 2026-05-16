@@ -1,7 +1,34 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import styles from "./ServicesSection.module.css";
+
+/* ─── Animation variants ─── */
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+const staggerContainer = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.15 },
+  },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+  },
+};
 
 const services = [
   {
@@ -29,22 +56,44 @@ export default function ServicesSection() {
     <section id="services" className={`section ${styles.services}`}>
       <div className="container">
         {/* Section Header */}
-        <div className={styles.header}>
-          <span className="section-label">Our Services</span>
-          <h2 className="section-title">
+        <motion.div
+          className={styles.header}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={staggerContainer}
+        >
+          <motion.span className="section-label" variants={fadeUp}>
+            Our Services
+          </motion.span>
+          <motion.h2 className="section-title" variants={fadeUp}>
             Comprehensive{" "}
             <span className="gradient-text">Security Solutions</span>
-          </h2>
-          <p className="section-subtitle">
+          </motion.h2>
+          <motion.p className="section-subtitle" variants={fadeUp}>
             From email protection to endpoint security, we cover every layer of
             your digital infrastructure.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Service Cards */}
-        <div className={styles.grid}>
+        <motion.div
+          className={styles.grid}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={staggerContainer}
+        >
           {services.map((service, i) => (
-            <div key={i} className={`glass-card ${styles.card}`}>
+            <motion.div
+              key={i}
+              className={`glass-card ${styles.card}`}
+              variants={cardVariant}
+              whileHover={{
+                y: -6,
+                transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+              }}
+            >
               {/* Image */}
               <div className={styles.cardImage}>
                 <Image
@@ -86,9 +135,9 @@ export default function ServicesSection() {
                   </svg>
                 </a>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

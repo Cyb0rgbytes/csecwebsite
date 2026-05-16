@@ -61,7 +61,7 @@
   z-index: 3;
   background: radial-gradient(circle, var(--purple-glow) 0%, transparent 70%);
   pointer-events: none;
-  animation: float 8s ease-in-out infinite;
+  will-change: transform;
 }
 
 .glowOrb2 {
@@ -74,7 +74,7 @@
   z-index: 3;
   background: radial-gradient(circle, var(--cyan-glow) 0%, transparent 70%);
   pointer-events: none;
-  animation: float 10s ease-in-out infinite reverse;
+  will-change: transform;
 }
 
 /* ---- Content layer (on top of everything) ---- */
@@ -219,8 +219,28 @@
   50% { transform: translateY(12px); opacity: 0.3; }
 }
 
-/* Responsive */
-@media (max-width: 968px) {
+/* ---- Responsive ---- */
+@media (max-width: 1024px) {
+  .content {
+    max-width: 480px;
+  }
+
+  .glowOrb1 {
+    width: 400px;
+    height: 400px;
+  }
+
+  .glowOrb2 {
+    width: 350px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 72px;
+  }
+
   .content {
     max-width: 100%;
     text-align: center;
@@ -242,6 +262,18 @@
   .scrollIndicator {
     display: none;
   }
+
+  .glowOrb1 {
+    width: 280px;
+    height: 280px;
+    opacity: 0.5;
+  }
+
+  .glowOrb2 {
+    width: 240px;
+    height: 240px;
+    opacity: 0.5;
+  }
 }
 
 @media (max-width: 480px) {
@@ -257,10 +289,19 @@
   .stats {
     flex-direction: column;
     gap: 16px;
+    width: 100%;
   }
 
   .statDivider {
     width: 36px;
     height: 1px;
+  }
+
+  .title {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
   }
 }

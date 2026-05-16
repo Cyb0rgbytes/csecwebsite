@@ -1,11 +1,29 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
 import styles from "./HeroSection.module.css";
 
 const SplineScene = dynamic(() => import("../components/SplineScene"), {
   ssr: false,
 });
+
+/* ─── Framer Motion variants ─── */
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+  },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+  },
+};
 
 export default function HeroSection() {
   return (
@@ -20,35 +38,49 @@ export default function HeroSection() {
 
       {/* Background effects */}
       <div className={styles.gridOverlay} />
-      <div className={styles.glowOrb1} />
-      <div className={styles.glowOrb2} />
+      <motion.div
+        className={styles.glowOrb1}
+        animate={{ y: [0, -15, 0] }}
+        transition={{ duration: 8, ease: "easeInOut", repeat: Infinity }}
+      />
+      <motion.div
+        className={styles.glowOrb2}
+        animate={{ y: [0, 12, 0] }}
+        transition={{ duration: 10, ease: "easeInOut", repeat: Infinity }}
+      />
 
       {/* Content on top */}
       <div className={styles.inner}>
-        <div className={styles.content}>
-          <div className={`${styles.badge} animate-fade-in-up`}>
+        <motion.div
+          className={styles.content}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div className={styles.badge} variants={fadeUp}>
             <span className={styles.badgeDot} />
             Cybersecurity Experts
-          </div>
+          </motion.div>
 
-          <h1 className={`${styles.title} animate-fade-in-up animate-delay-1`}>
+          <motion.h1 className={styles.title} variants={fadeUp}>
             Defend Your
             <br />
             <span className="gradient-text">Digital Frontier</span>
-          </h1>
+          </motion.h1>
 
-          <p
-            className={`${styles.subtitle} animate-fade-in-up animate-delay-2`}
-          >
+          <motion.p className={styles.subtitle} variants={fadeUp}>
             CSECNIX delivers enterprise-grade cybersecurity solutions — from
             endpoint protection to email security — keeping your business safe
             in an evolving threat landscape.
-          </p>
+          </motion.p>
 
-          <div
-            className={`${styles.actions} animate-fade-in-up animate-delay-3`}
-          >
-            <a href="#services" className="btn btn-primary">
+          <motion.div className={styles.actions} variants={fadeUp}>
+            <motion.a
+              href="#services"
+              className="btn btn-primary"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+            >
               Explore Services
               <svg
                 width="16"
@@ -60,16 +92,19 @@ export default function HeroSection() {
               >
                 <path d="M3 8h10M9 4l4 4-4 4" />
               </svg>
-            </a>
-            <a href="#about" className="btn btn-outline">
+            </motion.a>
+            <motion.a
+              href="#about"
+              className="btn btn-outline"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+            >
               Learn More
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
 
           {/* Stats Strip */}
-          <div
-            className={`${styles.stats} animate-fade-in-up animate-delay-4`}
-          >
+          <motion.div className={styles.stats} variants={fadeUp}>
             <div className={styles.stat}>
               <span className={styles.statNum}>24/7</span>
               <span className={styles.statLabel}>Monitoring</span>
@@ -84,14 +119,19 @@ export default function HeroSection() {
               <span className={styles.statNum}>500+</span>
               <span className={styles.statLabel}>Clients</span>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* Scroll indicator */}
-      <div className={styles.scrollIndicator}>
+      <motion.div
+        className={styles.scrollIndicator}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 0.8 }}
+      >
         <div className={styles.scrollDot} />
-      </div>
+      </motion.div>
     </section>
   );
 }
